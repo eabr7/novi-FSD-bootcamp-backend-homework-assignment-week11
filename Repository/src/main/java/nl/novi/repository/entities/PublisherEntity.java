@@ -15,6 +15,16 @@ public class PublisherEntity extends BaseEntity {
     @Column(name = "contactDetails")
     private String contactDetails;
 
+    public PublisherEntity() {
+
+    }
+
+    public PublisherEntity(String name, String address, String contactDetails) {
+        this.name = name;
+        this.address = address;
+        this.contactDetails = contactDetails;
+    }
+
     public String getName() {
         return name;
     }

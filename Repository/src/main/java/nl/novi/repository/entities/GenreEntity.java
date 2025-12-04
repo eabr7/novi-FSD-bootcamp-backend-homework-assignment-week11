@@ -13,6 +13,14 @@ public class GenreEntity extends BaseEntity {
     @Column(name = "description")
     private String description;
 
+    public GenreEntity() {
+    }
+
+    public GenreEntity(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public String getName() {
         return name;
     }

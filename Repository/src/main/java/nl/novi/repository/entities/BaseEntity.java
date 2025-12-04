@@ -28,6 +28,10 @@ public abstract class BaseEntity {
         editDate = LocalDateTime.now();
     }
 
+    public BaseEntity() {
+
+    }
+
     // Getters en Setters
     public Long getId() {
         return id;
