@@ -1,18 +1,21 @@
 package nl.novi.repository.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "publishers")
 public class PublisherEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "contactDetails")
     private String contactDetails;
 
     public PublisherEntity(Long id, String createDate, String editDate, String name, String address, String contactDetails) {

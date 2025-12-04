@@ -1,23 +1,34 @@
 package nl.novi.repository.entities;
 
+import jakarta.persistence.*;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 
-public class BaseEntity {
+@MappedSuperclass
+public abstract class BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String createDate;
-    private String editDate;
 
-    public BaseEntity(Long id,  String createDate, String editDate) {
-        this.id = id;
-        this.createDate = createDate;
-        this.editDate = editDate;
+    @Column(name = "created_date", updatable = false)
+    private LocalDateTime createDate;
+
+    @Column(name = "edited_date")
+    private LocalDateTime editDate;
+
+    @PrePersist
+    protected void onCreate() {
+        createDate = LocalDateTime.now();
+        editDate = createDate;
     }
 
+    @PreUpdate
+    protected void onUpdate() {
+        editDate = LocalDateTime.now();
+    }
+
+    // Getters en Setters
     public Long getId() {
         return id;
     }
@@ -26,19 +37,20 @@ public class BaseEntity {
         this.id = id;
     }
 
-    public String getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(String createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 
-    public String getEditDate() {
+    public LocalDateTime getEditDate() {
         return editDate;
     }
 
-    public void setEditDate(String editDate) {
+    public void setEditDate(LocalDateTime editDate) {
         this.editDate = editDate;
     }
 }
+
