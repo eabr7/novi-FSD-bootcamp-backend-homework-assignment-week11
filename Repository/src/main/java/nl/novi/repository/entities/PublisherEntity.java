@@ -6,9 +6,6 @@ import jakarta.persistence.*;
 @Table(name = "publishers")
 public class PublisherEntity extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "name")
     private String name;
 
@@ -17,13 +14,6 @@ public class PublisherEntity extends BaseEntity {
 
     @Column(name = "contactDetails")
     private String contactDetails;
-
-    public PublisherEntity(Long id, String createDate, String editDate, String name, String address, String contactDetails) {
-        super(id, createDate, editDate);
-        this.name = name;
-        this.address = address;
-        this.contactDetails = contactDetails;
-    }
 
     public String getName() {
         return name;
