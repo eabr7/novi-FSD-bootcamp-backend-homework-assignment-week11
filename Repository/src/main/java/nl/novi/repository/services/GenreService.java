@@ -1,6 +1,6 @@
 package nl.novi.repository.services;
 
-import nl.novi.repository.entities.Genre;
+import nl.novi.repository.entities.GenreEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 public class GenreService {
 
 
-    private final ArrayList<Genre> genreRepository;
+    private final ArrayList<GenreEntity> genreRepository;
 
     public GenreService() {
         genreRepository = new ArrayList<>();
@@ -32,7 +32,7 @@ public class GenreService {
      * Als de mock-database leeg is, wordt een lege lijst gertourneerd.
      * @return
      */
-    public List<Genre> findAllGenres() {
+    public List<GenreEntity> findAllGenres() {
         return genreRepository;
     }
 
@@ -42,7 +42,7 @@ public class GenreService {
      * @param id
      * @return
      */
-    public Genre findGenreById(Long id) {
+    public GenreEntity findGenreById(Long id) {
         return genreRepository.stream().filter(g -> g.getId().equals(id)).findFirst().orElseThrow(()->new IndexOutOfBoundsException("Genre met ID " + id + " niet gevonden"));
     }
 
@@ -51,7 +51,7 @@ public class GenreService {
      * @param genre Het te creëren en op te slaan genre. Moet niet `null` zijn.
      * @return Het opgeslagen Genre-object met het toegekende id.
      */
-    public Genre createGenre(Genre genre) {
+    public GenreEntity createGenre(GenreEntity genre) {
         genre.setId(findNextId(genreRepository));
         genreRepository.add(genre);
         return genre;
@@ -64,8 +64,8 @@ public class GenreService {
      * @param genreInput
      * @return
      */
-    public Genre updateGenre(Long id, Genre genreInput){
-        Genre existingGenreEntity = findGenreById(id);
+    public GenreEntity updateGenre(Long id, GenreEntity genreInput){
+        GenreEntity existingGenreEntity = findGenreById(id);
 
         existingGenreEntity.setName(genreInput.getName());
         existingGenreEntity.setDescription(genreInput.getDescription());
@@ -79,7 +79,7 @@ public class GenreService {
      */
     public void deleteGenre(Long id) {
         try{
-            Genre existingGenreEntity = findGenreById(id);
+            GenreEntity existingGenreEntity = findGenreById(id);
             genreRepository.remove(existingGenreEntity);
         } catch (IndexOutOfBoundsException _) {
         }
@@ -90,10 +90,10 @@ public class GenreService {
      * Een database maakt automatisch de volgende, unieke Primary Key voor je.
      * Deze helper-methode bootst die functionaliteit na in de ArrayList.
      */
-    private Long findNextId(ArrayList<Genre> genreRepository) {
+    private Long findNextId(ArrayList<GenreEntity> genreRepository) {
         Long highest = 0L;
         if(!genreRepository.isEmpty()){
-            for(Genre genre : genreRepository){
+            for(GenreEntity genre : genreRepository){
                 if(genre.getId() > highest){
                     highest = genre.getId();
                 }

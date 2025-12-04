@@ -1,6 +1,9 @@
 package nl.novi.repository.entities;
 
-public class Genre {
+import jakarta.persistence.Entity;
+
+@Entity
+public class GenreEntity  extends BaseEntity {
     /**
      * Dit is een mock-model voor de Genre.
      * In de volgende les ga je hier een echte entiteit voor maken.
