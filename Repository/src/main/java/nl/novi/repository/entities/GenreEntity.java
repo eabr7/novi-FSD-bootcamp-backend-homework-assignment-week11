@@ -1,23 +1,23 @@
 package nl.novi.repository.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 
 @Entity
-public class GenreEntity  extends BaseEntity {
-    /**
-     * Dit is een mock-model voor de Genre.
-     * In de volgende les ga je hier een echte entiteit voor maken.
-     */
-    private Long id;
+public class GenreEntity extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String name;
     private String description;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public GenreEntity(Long id, String createDate, String editDate, String name, String description) {
+        super(id, createDate, editDate);
+        this.name = name;
+        this.description = description;
     }
 
     public String getName() {
@@ -36,3 +36,4 @@ public class GenreEntity  extends BaseEntity {
         this.description = description;
     }
 }
+
