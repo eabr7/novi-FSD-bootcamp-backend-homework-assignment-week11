@@ -7,12 +7,15 @@ import jakarta.persistence.*;
 @Table(name = "genres")
 public class GenreEntity extends BaseEntity {
 
+    // set columns
     @Column(name = "name" , nullable = false)
     private String name;
 
     @Column(name = "description")
     private String description;
 
+
+    //constructors
     public GenreEntity() {
     }
 
@@ -21,6 +24,7 @@ public class GenreEntity extends BaseEntity {
         this.description = description;
     }
 
+    // getters & setters
     public String getName() {
         return name;
     }

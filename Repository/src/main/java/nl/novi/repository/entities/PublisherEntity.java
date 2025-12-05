@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "publishers")
 public class PublisherEntity extends BaseEntity {
 
+    // set columns
     @Column(name = "name" , nullable = false)
     private String name;
 
@@ -15,6 +16,7 @@ public class PublisherEntity extends BaseEntity {
     @Column(name = "contactDetails")
     private String contactDetails;
 
+    //constructors
     public PublisherEntity() {
 
     }
@@ -25,6 +27,7 @@ public class PublisherEntity extends BaseEntity {
         this.contactDetails = contactDetails;
     }
 
+    // getters & setters
     public String getName() {
         return name;
     }
