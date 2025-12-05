@@ -30,7 +30,7 @@ public class PublisherService {
     public PublisherEntity findPublisherById(Long id) {
         Optional<PublisherEntity> optionalPublisher = publisherRepository.findById(id);
         if  (optionalPublisher.isPresent()) {
-            return optionalPublisher.orElseThrow(() -> new RuntimeException("user not found"));
+            return optionalPublisher.get();
         } else {
             throw new EntityNotFoundException("Publisher not found");
         }
