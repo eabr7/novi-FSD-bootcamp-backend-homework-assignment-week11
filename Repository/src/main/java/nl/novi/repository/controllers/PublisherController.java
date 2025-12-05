@@ -28,7 +28,6 @@ public class PublisherController {
         return ResponseEntity.ok(publishers);
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<PublisherEntity> getPublisherById(@PathVariable Long id) {
         PublisherEntity publisher = publisherService.findPublisherById(id);
@@ -39,29 +38,22 @@ public class PublisherController {
     @PostMapping
     public ResponseEntity<PublisherEntity> createPublisher(@RequestBody PublisherEntity publisherInput) {
         PublisherEntity newPublisher = publisherService.createPublisher(publisherInput);
-        return new ResponseEntity<>(newPublisher, HttpStatus.CREATED);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newPublisher.getId())).build();
     }
 
     // PUT
-
-
-
-
     @PutMapping("/{id}")
-    public ResponseEntity<GenreEntity> updateGenre(@PathVariable Long id, @RequestBody GenreEntity genreInput) {
-        GenreEntity updatedGenre = genreService.updateGenre(id, genreInput);
-        return new ResponseEntity<>(updatedGenre, HttpStatus.OK);
+    public ResponseEntity<PublisherEntity> updatePublisherById(@PathVariable Long id, @RequestBody PublisherEntity publisherInput) {
+        PublisherEntity updatedPublisher = publisherService.updatePublisher(id, publisherInput);
+        return new ResponseEntity<>(updatedPublisher, HttpStatus.OK);
+
     }
 
     // DELETE
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGenre(@PathVariable Long id) {
-        genreService.deleteGenre(id);
+    public ResponseEntity<PublisherEntity> deletePublisherById(@PathVariable Long id) {
+        publisherService.deletePublisher(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-
-
 
 }
