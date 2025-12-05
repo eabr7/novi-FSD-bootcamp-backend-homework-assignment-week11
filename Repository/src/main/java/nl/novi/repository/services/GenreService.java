@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class GenreService {
 
-
+    // variables
     private final GenreRepository genreRepository;
 
     // constructor

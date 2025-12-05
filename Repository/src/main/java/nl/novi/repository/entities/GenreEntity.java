@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 @Table(name = "genres")
 public class GenreEntity extends BaseEntity {
 
-    // set columns
+    // defining columns
     @Column(name = "name" , nullable = false)
     private String name;
 

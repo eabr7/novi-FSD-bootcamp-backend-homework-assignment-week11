@@ -13,9 +13,11 @@ import java.util.List;
 @RequestMapping("/publishers")
 public class PublisherController {
 
+    // variables
     private final PublisherService publisherService;
     private final UrlHelper urlHelper;
 
+    // constructor
     public PublisherController(PublisherService publisherService, UrlHelper urlHelper) {
         this.publisherService = publisherService;
         this.urlHelper = urlHelper;

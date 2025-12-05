@@ -13,9 +13,11 @@ import java.util.List;
 @RequestMapping("/genres")
 public class GenreController {
 
+    // variables
     private final GenreService genreService;
     private final UrlHelper urlHelper;
 
+    // constructor
     public GenreController(GenreService genreService, UrlHelper urlHelper) {
         this.genreService = genreService;
         this.urlHelper = urlHelper;

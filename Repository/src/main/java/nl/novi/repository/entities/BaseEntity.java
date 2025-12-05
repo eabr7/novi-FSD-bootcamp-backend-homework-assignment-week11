@@ -7,16 +7,19 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public abstract class BaseEntity {
 
+    // ID (for de primary key in SQL)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // defining columns
     @Column(name = "created_date", updatable = false)
     private LocalDateTime createDate;
 
     @Column(name = "edited_date")
     private LocalDateTime editDate;
 
+    // Use of @PrePersist and @PreUpdate
     @PrePersist
     protected void onCreate() {
         createDate = LocalDateTime.now();
@@ -28,11 +31,12 @@ public abstract class BaseEntity {
         editDate = LocalDateTime.now();
     }
 
+    // constructor (HAS TO BE NO-ARGS, in this case because if ID and @PrePersist / @PreUpdate)
     public BaseEntity() {
 
     }
 
-    // Getters en Setters
+    // Getters & Setters
     public Long getId() {
         return id;
     }

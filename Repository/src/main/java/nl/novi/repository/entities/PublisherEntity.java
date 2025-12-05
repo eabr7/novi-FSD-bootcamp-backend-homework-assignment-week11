@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "publishers")
 public class PublisherEntity extends BaseEntity {
 
-    // set columns
+    // defining columns
     @Column(name = "name" , nullable = false)
     private String name;
 
