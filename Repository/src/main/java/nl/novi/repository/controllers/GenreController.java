@@ -39,7 +39,7 @@ public class GenreController {
     @PostMapping
     public ResponseEntity<GenreEntity> createGenre(@RequestBody GenreEntity genreInput) {
         GenreEntity newGenre = genreService.createGenre(genreInput);
-        return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newGenre.getId())).build();
+        return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newGenre.getId())).body(newGenre);
     }
 
     // PUT

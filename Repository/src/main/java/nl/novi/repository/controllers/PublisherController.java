@@ -38,7 +38,7 @@ public class PublisherController {
     @PostMapping
     public ResponseEntity<PublisherEntity> createPublisher(@RequestBody PublisherEntity publisherInput) {
         PublisherEntity newPublisher = publisherService.createPublisher(publisherInput);
-        return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newPublisher.getId())).build();
+        return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newPublisher.getId())).body(newPublisher);
     }
 
     // PUT
