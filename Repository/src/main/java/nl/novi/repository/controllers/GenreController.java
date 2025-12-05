@@ -22,30 +22,34 @@ public class GenreController {
 
     }
 
+    // GET
     @GetMapping
     public ResponseEntity<List<GenreEntity>> getAllGenres() {
-        var genres = genreService.findAllGenres();
+        List<GenreEntity> genres = genreService.findAllGenres();
         return ResponseEntity.ok(genres);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GenreEntity> getGenreById(@PathVariable Long id) {
-        var genre = genreService.findGenreById(id);
+        GenreEntity genre = genreService.findGenreById(id);
         return new ResponseEntity<>(genre, HttpStatus.OK);
     }
 
+    // POST
     @PostMapping
     public ResponseEntity<GenreEntity> createGenre(@RequestBody GenreEntity genreInput) {
-        var newGenre = genreService.createGenre(genreInput);
-        return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newGenre.getId())).body(newGenre);
+        GenreEntity newGenre = genreService.createGenre(genreInput);
+        return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newGenre.getId())).build();
     }
 
+    // PUT
     @PutMapping("/{id}")
     public ResponseEntity<GenreEntity> updateGenre(@PathVariable Long id, @RequestBody GenreEntity genreInput) {
-        var updatedGenre = genreService.updateGenre(id, genreInput);
+        GenreEntity updatedGenre = genreService.updateGenre(id, genreInput);
         return new ResponseEntity<>(updatedGenre, HttpStatus.OK);
     }
 
+    // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGenre(@PathVariable Long id) {
         genreService.deleteGenre(id);

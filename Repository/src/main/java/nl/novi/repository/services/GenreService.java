@@ -1,105 +1,64 @@
 package nl.novi.repository.services;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import nl.novi.repository.entities.GenreEntity;
+import nl.novi.repository.repositories.GenreRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-/**
- * Deze GenreService is een tijdelijke oplossing om een echte GenreService na te bootsen.
- * In de volgende les zul je deze GenreService moeten aanpassen of een nieuwe GenreService maken,
- * zodat het gebruik maakt van een database in plaats van een ArrayList.
- * De beschikbare methodes in deze Service zijn:
- * - findAllGenres
- * - findGenreById
- * - createGenre
- * - updateGenre
- * - deleteGenre
- */
+
 @Service
 public class GenreService {
 
 
-    private final ArrayList<GenreEntity> genreRepository;
+    private final GenreRepository genreRepository;
 
-    public GenreService() {
-        genreRepository = new ArrayList<>();
+    // constructor
+    public GenreService(GenreRepository genreRepository) {
+        this.genreRepository = genreRepository;
     }
 
-    /**
-     * Haalt alle record uit de mock-database op.
-     * Als de mock-database leeg is, wordt een lege lijst gertourneerd.
-     * @return
-     */
+    // findAll method for all genres in a genre list
     public List<GenreEntity> findAllGenres() {
-        return genreRepository;
+          return genreRepository.findAll();
     }
 
-    /**
-     * Haalt een bestaande Genre-record op uit de mock-database op basis van het id.
-     * Als er geen record bestaat met dat id, wordt een Exception opgegooid.
-     * @param id
-     * @return
-     */
+    // findById method to find one specific genre
     public GenreEntity findGenreById(Long id) {
-        return genreRepository.stream().filter(g -> g.getId().equals(id)).findFirst().orElseThrow(()->new IndexOutOfBoundsException("Genre met ID " + id + " niet gevonden"));
-    }
-
-    /**
-     * Slaat een nieuw Genre-record op in de mock-database en maakt daarbij een uniek ID aan voor het object.
-     * @param genre Het te creëren en op te slaan genre. Moet niet `null` zijn.
-     * @return Het opgeslagen Genre-object met het toegekende id.
-     */
-    public GenreEntity createGenre(GenreEntity genre) {
-        genre.setId(findNextId(genreRepository));
-        genreRepository.add(genre);
-        return genre;
-
-    }
-
-    /**
-     * Update een bestaande Genre-record uit de mock-database op basis van het id.
-     * @param id
-     * @param genreInput
-     * @return
-     */
-    public GenreEntity updateGenre(Long id, GenreEntity genreInput){
-        GenreEntity existingGenreEntity = findGenreById(id);
-
-        existingGenreEntity.setName(genreInput.getName());
-        existingGenreEntity.setDescription(genreInput.getDescription());
-
-        return existingGenreEntity;
-    }
-
-    /**
-     * Verwijderd een Genre uit de mock-database op basis van het id
-     * @param id
-     */
-    public void deleteGenre(Long id) {
-        try{
-            GenreEntity existingGenreEntity = findGenreById(id);
-            genreRepository.remove(existingGenreEntity);
-        } catch (IndexOutOfBoundsException _) {
+        Optional<GenreEntity> optionalGenre = genreRepository.findById(id);
+        if  (optionalGenre.isPresent()) {
+            return optionalGenre.get();
+        } else {
+            throw new EntityNotFoundException("Genre not found");
         }
-
     }
 
-    /**
-     * Een database maakt automatisch de volgende, unieke Primary Key voor je.
-     * Deze helper-methode bootst die functionaliteit na in de ArrayList.
-     */
-    private Long findNextId(ArrayList<GenreEntity> genreRepository) {
-        Long highest = 0L;
-        if(!genreRepository.isEmpty()){
-            for(GenreEntity genre : genreRepository){
-                if(genre.getId() > highest){
-                    highest = genre.getId();
-                }
-            }
+    // create method to create a new genre
+    @Transactional
+    public GenreEntity createGenre (GenreEntity input) {
+        return genreRepository.save(input);
+    }
+
+    // update method to change one specific genre
+    @Transactional
+    public GenreEntity updateGenre (long id, GenreEntity input) {
+        GenreEntity updatedGenre = findGenreById(id);
+        if  (updatedGenre != null) {
+            updatedGenre.setName(input.getName());
+            updatedGenre.setDescription(input.getDescription());
+            return  genreRepository.save(updatedGenre);
+        } else {
+            throw new EntityNotFoundException("Genre not found");
         }
-        return highest+1;
+    }
+
+    // delete method to delete one specific genre
+    @Transactional
+    public void deleteGenre (long id) {
+        genreRepository.deleteById(id);
     }
 
 }
